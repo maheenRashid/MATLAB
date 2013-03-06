@@ -30,7 +30,7 @@ function [ resultCorr,corrAll ] = maheen_getObjCorr( imCell1,imCell2 )
 %         sum(abs(corrCurr))
 %         resultCorr(rotNo)=sum(abs(corrCurr));
         
-        resultCorr(rotNo)=sum(corrCurr);
+        resultCorr(rotNo)=sum(corrCurr(~isnan(corrCurr(:,1)),:));
 %         pause
     end
 end
