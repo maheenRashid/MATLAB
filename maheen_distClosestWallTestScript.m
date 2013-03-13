@@ -51,7 +51,7 @@ wLines=[wallsMin(1,:);wallsMin(2,:);wallsMax(1,:);wallsMax(2,:)];
 
 %plot lines
 h=maheen_plotLines(bLines,'-r');    
-maheen_plotLines(wLines,'-k',h);
+% maheen_plotLines(wLines,'-k',h);
 
 %get angle b/w wall and boxes
 vWall=[wLines(3,:)-wLines(1,:);wLines(4,:)-wLines(2,:)];
@@ -81,6 +81,12 @@ end
 
 wLines=wLines(:,bin>0);
 
+vWall=[wLines(3,:)-wLines(1,:);wLines(4,:)-wLines(2,:)];
+vWallNorm=vWall'*vWall;
+vWallNorm=diag(vWallNorm);
+vWallNorm=sqrt(vWallNorm');
+vWallN=vWall./repmat(vWallNorm,2,1);
+
 b1=bLines(:,1:size(boundsMax,2));
 b2=bLines(:,size(boundsMax,2)+1:2*size(boundsMax,2));
 b3=bLines(:,2*size(boundsMax,2)+1:3*size(boundsMax,2));
@@ -107,15 +113,20 @@ angleb2=acos(abs(dotB2));
 binb1=angleb1>angleb2;
 
 %
-boxNo=1;
+
+minDistances=zeros(size(b1,2),size(wLines,2))';
+minEdge=cell(size(b1,2),size(wLines,2))';
+pred=minDistances;
+for boxNo=1:size(b1,2)
+%     
+% 
+% boxNo=1;
 box=[b1(:,boxNo),b2(:,boxNo),b3(:,boxNo),b4(:,boxNo)];
 
-h=maheen_plotLines(box,'-r');
-maheen_plotLines(wLines(:,1),'-b',h);
+% h=maheen_plotLines(box,'-r');
+% maheen_plotLines(wLines(:,1),'-b',h);
 
-minD=[];
-for wallNo=1:1
-%     size(wLines,2)
+for wallNo=1:     size(wLines,2)
     if ~binb1(wallNo,boxNo)
         boxLine=b1(:,boxNo);
         boxLine=[boxLine b3(:,boxNo)];
@@ -124,12 +135,45 @@ for wallNo=1:1
         boxLine=[boxLine b4(:,boxNo)];
     end
     
-    maheen_getLineSegDist(boxLine(:,1),wLines(:,wallNo))
-    
+%     maheen_getLineSegDist(boxLine(:,1),wLines(:,wallNo));
+    minD=zeros(1,size(boxLine,2));    
     for lineNo=1:size(boxLine,2)
-       minD=[minD maheen_getLineSegDist(boxLine(:,lineNo),wLines(:,wallNo))];
+       minD(lineNo)=maheen_getLineSegDist(boxLine(:,lineNo),wLines(:,wallNo));
+    end
+    [minDistances(wallNo,boxNo),ind]=min(minD);
+    minEdge{wallNo,boxNo}=boxLine(:,ind);
+    
+    if binb1(wallNo,boxNo)
+        if ind==1
+            pred(wallNo,boxNo)=4;
+        else
+            pred(wallNo,boxNo)=2;
+        end
+    else
+        if ind==1
+            pred(wallNo,boxNo)=3;
+        else
+            pred(wallNo,boxNo)=1;
+        end
     end
 end
 
 
+end
+
+
+[minDistBox,minInd]=min(minDistances);
+binbox=minDistBox<3;
+
+ b1Curr=b1(:,binbox);b2Curr=b2(:,binbox);b3Curr=b3(:,binbox);b4Curr=b4(:,binbox);
+boxCloseToWall=[b1Curr,b2Curr,b3Curr,b4Curr];
+maheen_plotLines(boxCloseToWall,'-g',h);    
+maheen_plotLines(wLines,'-k',h);
+
+
+predCol=1:size(pred,2);
+predRow=minInd;
+
+predInd=sub2ind(size(pred),predRow,predCol);
+predMin=pred(predInd);
 
