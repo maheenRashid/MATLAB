@@ -15,11 +15,17 @@
 
 ccc
 
-for compNo = 1:16
-    load(['maheen_temp\matA_orientedWidthWays_cornerAligned_' num2str(compNo) '.mat']);
+for compNo = 8:16
+%     load(['maheen_temp\matA_orientedWidthWays_cornerAligned_' num2str(compNo) '.mat']);
 %      A=A(1:10);
-    nameTextFile='maheen_cornerPlacement_oriented_fixed\category_orientedWidthWays_';
-    f=fopen([nameTextFile num2str(compNo) '.txt'],'w');
+%     nameTextFile='maheen_cornerPlacement_oriented_fixed\category_orientedWidthWays_';
+for rotNo=1:3
+ outputDir='maheen_rewritingSkpsWithOrient';
+%    load(fullfile(outputDir,['matADuplicatesRemovedCornerAlignedOriented_tempEqualImRemoved_rot' num2str(rotNo) '_' num2str(compNo)]),'A');    
+   load(fullfile(outputDir,['matADuplicatesRemovedCornerAlignedOrientedMinDistWall_rot' num2str(rotNo) '_' num2str(compNo)]),'A');    
+nameTextFile=fullfile(outputDir,'perCategorySkpFiles',['category_orientedByPred_rot' num2str(rotNo) '_']);
+
+f=fopen([nameTextFile num2str(compNo) '.txt'],'w');
     fprintf(f,'%d\n',length(A));
     for compsIndex=1:length(A);
         fprintf(f,'%d\n',(length(A{compsIndex}))/2);
@@ -48,19 +54,20 @@ for compNo = 1:16
     end
     fclose(f);
     
-    f=fopen([nameTextFile 'cat_' num2str(compNo) '.txt'],'w');
-    for compsIndex=1:length(A)
-%         length(A);
-        fprintf(f,'%d\n',compNo);
-    end
-    fclose(f);
-    
-    f=fopen([nameTextFile 'group_' num2str(compNo) '.txt'],'w');
-    for compsIndex=1:length(A)
-%         length(A);
-        fprintf(f,'%d\n',compsIndex);
-    end
-    fclose(f);
+%     f=fopen([nameTextFile 'cat_' num2str(compNo) '.txt'],'w');
+%     for compsIndex=1:length(A)
+% %         length(A);
+%         fprintf(f,'%d\n',compNo);
+%     end
+%     fclose(f);
+%     
+%     f=fopen([nameTextFile 'group_' num2str(compNo) '.txt'],'w');
+%     for compsIndex=1:length(A)
+% %         length(A);
+%         fprintf(f,'%d\n',compsIndex);
+%     end
+%     fclose(f);
     
     A=0;%clear A
+end
 end

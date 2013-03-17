@@ -1,5 +1,5 @@
 ccc
-for compNo=1:16
+for compNo=7:16
     dirName='maheen_findOrientationSolid';
     inputdirSpec=fullfile(dirName,'groundTruthMoreTemplate');
     dirNameCurr=fullfile(dirName,[num2str(compNo) '_projDims_new_3d']);
@@ -50,7 +50,7 @@ for compNo=1:16
         [pred,minDistances,minEdgeBox,minEdgeWall,shorter,bLines,wLines]=maheen_getPredWallDist(A,mergedA,0);
         [predUnique,indDist]=unique(pred,'stable');
         corner=0;
-        
+        if numel(predUnique)>1
         if mod(predUnique(1),2)~=mod(predUnique(2),2)
             d1=minDistances(indDist(1));
             d2=minDistances(indDist(2));
@@ -58,7 +58,7 @@ for compNo=1:16
                 corner=1;
             end
         end
-        
+        end
         prediction=pred(1);
         predictionShort=prediction;
         predictionLong=prediction;

@@ -196,8 +196,11 @@ for i=1:numel(A)-1
     minAll=[minAll; boundComp(1,:)];
     maxAll=[maxAll; boundComp(2,:)];
 end
+if size(minAll,1)<2
+boundAll=[minAll; maxAll];
 
+else
 boundAll=[min(minAll); max(maxAll)];
-
+end
 
 end
