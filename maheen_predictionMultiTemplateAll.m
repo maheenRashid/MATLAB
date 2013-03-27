@@ -1,7 +1,14 @@
 ccc
+gtModelCase=1;
 for compNo=1:8
     dirName='maheen_findOrientationSolid';
     outputdirSpec=fullfile(dirName,'groundTruthMoreTemplate');
+    
+    if gtModelCase
+    outputdirParent='maheen_dataForGTModels';
+    outputdirSpec=fullfile(outputdirParent,'corrCellsAll_problemFinal');
+    end
+    
     load(fullfile(outputdirSpec,['corrCellsAll_' num2str(compNo) '.mat']));
     
 %     first set temp=imNo to empty

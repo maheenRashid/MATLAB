@@ -22,8 +22,9 @@ load(['../../results_All/' name '.mat']);
 mergeLabels=maheen_labelGroups(skpCat,skpGroup);
 for indMerge=1:size(mergeLabels,2)
     mergedA=maheen_mergeWithA(mergeLabels{2,indMerge},A);
-    return
-    %     save(['maheen_mergedComp/' num2str(mergeLabels{1,indMerge}) '/' name '_' num2str(indMerge) '.mat']);
+
+    %     return
+    save(fullfile(outputDir,num2str(mergeLabels{1,indMerge}) , [name '_' num2str(indMerge) '.mat']),'mergedA','mergeLabels');
 end
 
 

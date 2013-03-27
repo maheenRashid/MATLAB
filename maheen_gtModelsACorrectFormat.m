@@ -1,0 +1,29 @@
+ccc
+pathA='D:\ResearchCMU\lustre\jasonli1\code\MATLAB\maheen_dataForGTModels\cellA_problemFinal';
+dirA=dir(pathA);
+dirA=dirA(3:end);
+pathWall='D:\ResearchCMU\lustre\jasonli1\code\MATLAB\maheen_dataForGTModels\cellWallsAll';
+pathOutput='D:\ResearchCMU\lustre\jasonli1\code\MATLAB\maheen_dataForGTModels\cellA_problemFinal_correctFormat';
+mkdir('D:\ResearchCMU\lustre\jasonli1\code\MATLAB\maheen_dataForGTModels\cellA_problemFinal_correctFormat');
+for i=1:numel(dirA)
+    load(fullfile(pathA,dirA(i).name),'A');
+    load(fullfile(pathWall,dirA(i).name),'walls');
+    walls=walls';
+    walls=cell2mat(walls);
+    coordAll=zeros(0,3);
+    for count=1:numel(A)
+        temp=A{count}(1:2:end);
+        temp=temp';
+        temp=cell2mat(temp);
+        coordAll=[coordAll;temp];
+        A{count}=[A{count},{[]}];
+    end
+    coordAll=[coordAll;walls];
+    boundScene=[min(coordAll,[],1);max(coordAll,[],1)];
+    boundScene=boundScene(:)';
+    last=cell(1,2);
+    last{1}=boundScene;
+    last{2}=walls;
+    A=[A,{last}];
+    save(fullfile(pathOutput,dirA(i).name),'A');
+end

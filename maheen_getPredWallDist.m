@@ -1,41 +1,20 @@
-function [pred,minDistances,minEdgeBox,minEdgeWall,shorter,bLines,wLines] = maheen_getPredWallDist( A,mergedA,show )
+function [pred,minDistances,minEdgeBox,minEdgeWall,shorter,bLines,wLines] = maheen_getPredWallDist( A,mergedA,show,useBounds )
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 if nargin<3
-    show=1;
+    show=0;
 end
+
+if nargin<4
+    useBounds=1;
+end
+
+
 bounds=getBoundsForComp(mergedA);
 bounds=bounds(:,1:2);
 
 walls=A{end}{2};
-
-if ~isempty(walls)
-walls=walls(:,1:2);
-wallsMin=min(walls);
-wallsMax=max(walls);
-
-wallsBounds=[wallsMin;wallsMax];
-boxV=[bounds(1,1) bounds(1,1) bounds(2,1) bounds(2,1);bounds(1,2) bounds(2,2) bounds(2,2) bounds(1,2)];
-wallV=[wallsBounds(1,1) wallsBounds(1,1) wallsBounds(2,1) wallsBounds(2,1);wallsBounds(1,2) wallsBounds(2,2) wallsBounds(2,2) wallsBounds(1,2)];
-
-[in,on]=inpolygon(boxV(1,:),boxV(2,:),wallV(1,:),wallV(2,:));
-else
-    in=0;
-    on=0;
-end
-
-if sum(in+on)<1  
-    boundAll=getBoundAllComp(A);
-    boundAll=boundAll(:,1:2);
-    walls=[boundAll(1,:);...
-        [boundAll(1,1) boundAll(2,2)];...
-        [boundAll(1,1) boundAll(2,2)];...
-        boundAll(2,:);...
-        boundAll(2,:);...
-        [boundAll(2,1) boundAll(1,2)];...
-        [boundAll(2,1) boundAll(1,2)];...
-        boundAll(1,:)];
-end
+walls=getWallsOrBound(walls,bounds,A,useBounds);
 
 bounds=bounds';
 boundsMin=bounds(:,1:2:end);
@@ -58,6 +37,7 @@ if show>0
     h=maheen_plotLines(bLines,'-r');
     maheen_plotLines(wLines,'-k',h);
     axis equal
+    pause;
 end
 
 %get bin for angle b/w wall and boxes
@@ -113,7 +93,7 @@ for boxNo=1:size(b1,2)
             end
             shorter(wallNo,boxNo)=shortBin;
         end
-    end    
+    end
 end
 
 %sort by distance
@@ -197,10 +177,46 @@ for i=1:numel(A)-1
     maxAll=[maxAll; boundComp(2,:)];
 end
 if size(minAll,1)<2
-boundAll=[minAll; maxAll];
-
+    boundAll=[minAll; maxAll];
+    
 else
-boundAll=[min(minAll); max(maxAll)];
+    boundAll=[min(minAll); max(maxAll)];
 end
 
+end
+
+function [walls]=getWallsOrBound(walls,bounds,A,useBounds)
+    if ~isempty(walls)
+        walls=walls(:,1:2);
+        if ~useBounds
+            return
+        end
+        wallsMin=min(walls);
+        wallsMax=max(walls);
+        
+        wallsBounds=[wallsMin;wallsMax];
+        boxV=[bounds(1,1) bounds(1,1) bounds(2,1) bounds(2,1);bounds(1,2) bounds(2,2) bounds(2,2) bounds(1,2)];
+        wallV=[wallsBounds(1,1) wallsBounds(1,1) wallsBounds(2,1) wallsBounds(2,1);wallsBounds(1,2) wallsBounds(2,2) wallsBounds(2,2) wallsBounds(1,2)];
+        
+        [in,on]=inpolygon(boxV(1,:),boxV(2,:),wallV(1,:),wallV(2,:));
+    else
+        in=0;
+        on=0;
+    end
+    
+    if sum(in+on)<1
+        boundAll=getBoundAllComp(A);
+        boundAll=boundAll(:,1:2);
+        walls=[boundAll(1,:);...
+            [boundAll(1,1) boundAll(2,2)];...
+            [boundAll(1,1) boundAll(2,2)];...
+            boundAll(2,:);...
+            boundAll(2,:);...
+            [boundAll(2,1) boundAll(1,2)];...
+            [boundAll(2,1) boundAll(1,2)];...
+            boundAll(1,:)];
+    end
+    
+    
+    
 end

@@ -6,8 +6,8 @@ load(fullfile(outputDir,'nameCellsAndDistAndBoundAndDistRefAndCompiledRelStatsNo
 % 'binMatchAll','idxMatchAll','dirNameMerge','distCellAll',...
 % 'boundCellAll','distCellAllNewRef',);
 
-compNo1=2;
-compNo2=9;
+compNo1=1;
+compNo2=8;
 
 distCellCurr=distCompiledAllCell{compNo1,compNo2};
 noPairs=size(distCellCurr,2);
@@ -48,11 +48,15 @@ case3=caseNo3Stats;
 cellStats={minCase1,minCase2,horzCase1,horzCase2,ratioCase1,ratioCase2,midCase2,case3};
 cellStatsStrings={'minCase1','minCase2','horzCase1','horzCase2','ratioCase1','ratioCase2','midCase2','case3'};
 meanAndStdDev=zeros(2,size(cellStats,2));
-for i=1:size(cellStats,2)
+for i=1:1
+%     size(cellStats,2)
     x=min(cellStats{i}):5:max(cellStats{i});
     no=numel(cellStats{i});
     figure;
     hist(cellStats{i},x);
-    title([cellStatsStrings{i} '\_' num2str(no)]);
+    title('Distance Between Bed and Nightstand');
+    xlabel('Distance');
+    ylabel('Frequency');
+%     title([cellStatsStrings{i} '\_' num2str(no)]);
 end
 

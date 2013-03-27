@@ -1,15 +1,25 @@
 ccc
 
 scale=[50,50]
+outputDirParent='maheen_dataForGTModels';
+dirMergedA=fullfile(outputDirParent,'mergedCompAll_problemFinal');
+dirVoxAndMap=fullfile(outputDirParent,'heightMapsAnd3dVox_problemFinal');
+errorLog=cell(1,0);
 for compNo=1:16
-    dirName=['maheen_mergedComp/' num2str(compNo)];
-    outputdirSpec=['maheen_findOrientationSolid\' num2str(compNo) '_projDims_new_3d'];
+%     dirName=['maheen_mergedComp/' num2str(compNo)];
+%     outputdirSpec=['maheen_findOrientationSolid\' num2str(compNo) '_projDims_new_3d'];
+    dirName=fullfile(dirMergedA,num2str(compNo));
+    outputdirSpec=fullfile(dirVoxAndMap,num2str(compNo));
+    
     direc=dir(dirName);
     direc=direc(3:end);
     
     for compInd=1:numel(direc)
         load(fullfile(dirName,direc(compInd).name),'mergedA');
-        
+        if  isempty(mergedA)
+            errorLog=[errorLog fullfile(dirName,direc(compInd).name)];
+            continue
+        end
         dims=[1 2 3;1 3 2;2 3 1];
         corrs=zeros(2*size(dims,1));
         allmaps=cell(2,6);

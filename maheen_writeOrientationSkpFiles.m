@@ -1,6 +1,6 @@
 ccc
 outputDir='maheen_rewritingSkpsWithOrient';
-load(fullfile(outputDir,'predAndFileNamesCompiled.mat'),'namesAndOrientAll');
+load(fullfile(outputDir,'predAndFileNamesCompiled.mat'));
 nameTextFile=fullfile(outputDir,'perModelOrientFiles');
 
 for fileNo=1:size(namesAndOrientAll,1)
@@ -8,7 +8,7 @@ for fileNo=1:size(namesAndOrientAll,1)
     if isempty(orientVec)
         continue
     end
-    
+
     f=fopen(fullfile(nameTextFile,[ namesAndOrientAll{fileNo,1} '.txt']),'w');
     for compsIndex=1:length(orientVec)
         fprintf(f,'%d\n',orientVec(compsIndex));
@@ -63,7 +63,7 @@ if numel(skpGroup)~=numel(skpCat)
     continue
 end
 % load(['../../results_All/' name '.mat']);
-    
+
 mergeLabels=maheen_labelGroups(skpCat,skpGroup);
 orientVec=zeros(size(skpCat));
 for indMerge=1:size(mergeLabels,2)
@@ -83,7 +83,7 @@ for indMerge=1:size(mergeLabels,2)
     end
     predOfComp=predCurr(bin);
     orientVec(mergeLabels{2,indMerge})=predOfComp;
-    
+
 end
 
 orientVecAll{indNames}=orientVec;
