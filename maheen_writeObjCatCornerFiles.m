@@ -15,15 +15,22 @@
 
 ccc
 
-for compNo = 8:16
+for compNo = 1:16
 %     load(['maheen_temp\matA_orientedWidthWays_cornerAligned_' num2str(compNo) '.mat']);
 %      A=A(1:10);
 %     nameTextFile='maheen_cornerPlacement_oriented_fixed\category_orientedWidthWays_';
-for rotNo=1:3
- outputDir='maheen_rewritingSkpsWithOrient';
+for rotNo=1:4
+ outputDir='maheen_rewritingSkpsWithOrient_4_21';
 %    load(fullfile(outputDir,['matADuplicatesRemovedCornerAlignedOriented_tempEqualImRemoved_rot' num2str(rotNo) '_' num2str(compNo)]),'A');    
-   load(fullfile(outputDir,['matADuplicatesRemovedCornerAlignedOrientedMinDistWall_rot' num2str(rotNo) '_' num2str(compNo)]),'A');    
-nameTextFile=fullfile(outputDir,'perCategorySkpFiles',['category_orientedByPred_rot' num2str(rotNo) '_']);
+   
+if rotNo>3
+load(fullfile(outputDir,['matADuplicatesRemovedCornerAlignedOriented_' num2str(compNo)]),'A');    
+
+else
+load(fullfile(outputDir,['matADuplicatesRemovedCornerAlignedOriented_rot' num2str(rotNo) '_' num2str(compNo)]),'A');    
+end
+   
+   nameTextFile=fullfile(outputDir,'perCategorySkpFiles',['category_orientedByPred_rot' num2str(rotNo) '_']);
 
 f=fopen([nameTextFile num2str(compNo) '.txt'],'w');
     fprintf(f,'%d\n',length(A));
@@ -54,19 +61,19 @@ f=fopen([nameTextFile num2str(compNo) '.txt'],'w');
     end
     fclose(f);
     
-%     f=fopen([nameTextFile 'cat_' num2str(compNo) '.txt'],'w');
-%     for compsIndex=1:length(A)
-% %         length(A);
-%         fprintf(f,'%d\n',compNo);
-%     end
-%     fclose(f);
-%     
-%     f=fopen([nameTextFile 'group_' num2str(compNo) '.txt'],'w');
-%     for compsIndex=1:length(A)
-% %         length(A);
-%         fprintf(f,'%d\n',compsIndex);
-%     end
-%     fclose(f);
+    f=fopen([nameTextFile 'cat_' num2str(compNo) '.txt'],'w');
+    for compsIndex=1:length(A)
+%         length(A);
+        fprintf(f,'%d\n',compNo);
+    end
+    fclose(f);
+    
+    f=fopen([nameTextFile 'group_' num2str(compNo) '.txt'],'w');
+    for compsIndex=1:length(A)
+%         length(A);
+        fprintf(f,'%d\n',compsIndex);
+    end
+    fclose(f);
     
     A=0;%clear A
 end

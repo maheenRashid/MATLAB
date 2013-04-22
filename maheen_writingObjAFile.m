@@ -1,7 +1,10 @@
 ccc
-% compNo=1;
-for compNo=2:17
-skpMatFilesDir=['maheen_mergedComp/' num2str(compNo)];
+
+% outputDir='maheen_mergedComp/';
+outputDir='maheen_dataForGTModels_cleanedUp/mergedCompAll/';
+
+for compNo=1:17
+skpMatFilesDir=[outputDir num2str(compNo)];
 d_results = dir(skpMatFilesDir);
 A=cell(1,length(3:length(d_results)));
 % return
@@ -11,5 +14,6 @@ for fileIndex = 3:(length(d_results))
 %     d_results(fileIndex).name
     A{1,fileIndex-2}=mergedA;
 end
-save(['maheen_mergedComp/matA_' num2str(compNo) '.mat'],'A');
+direcSuperA=d_results(3:end);
+save([outputDir 'matA_' num2str(compNo) '.mat'],'A','direcSuperA');
 end

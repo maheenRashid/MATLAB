@@ -6,7 +6,7 @@ for compNo=8:16
 load(fullfile(outputDir,['matADuplicatesRemovedCornerAlignedOrientedMinDistWall_' num2str(compNo)]),'A','direcSuperA');
     AOrg=A;
 for rotNo=1:3
-newA=A;
+    newA=A;
     for compInd=1:numel(A)
         compCurr=A{1,compInd};
         angle=rotNo*pi/2;
