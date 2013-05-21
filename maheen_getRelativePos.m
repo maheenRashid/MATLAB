@@ -1,5 +1,9 @@
 function [ posX1,posY1,posX2,posY2 ] = maheen_getRelativePos( bPts1,bPts2 )
-%UNTITLED9 Summary of this function goes here
+%tells what the left right top bottom positioning of componenets relative
+%to one another is. posX tells whether component is strictly left (-2),
+%left(-1), completely overlapping (0), right (1), strictly right(2). The same goes for
+%y, with top having positive values and bottom having negative. values of 1
+%imply slight overlap in that dimension. 
 %   Detailed explanation goes here
 posX1=0;
     posY1=0;

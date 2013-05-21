@@ -1,5 +1,9 @@
 function [ bPts,bLines ] = maheen_getBoundComp( comp )
-%UNTITLED2 Summary of this function goes here
+%returns component bounding points and lines. points arranged in clockwise
+%order starting from min,min. blines are 4by4 with each column with the
+%endpoints of the line.bPts is 2by4.comp is the comp from mergedcomp. or
+%any comp from the A matrix with the string name etc cell from its end
+%removed.
 %   Detailed explanation goes here
 bounds=zeros(2,3);
 currCoord=comp(1:2:end);

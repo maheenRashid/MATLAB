@@ -1,10 +1,13 @@
 ccc
-
 outputDir='maheen_statsUsingOrientation';
 load(fullfile(outputDir,'nameCellsAndDistAndBoundAndDistRefAndCompiledRelStatsNoOrient.mat'),...
-'nameCellAll','distCompiledAllCell');
-% 'binMatchAll','idxMatchAll','dirNameMerge','distCellAll',...
-% 'boundCellAll','distCellAllNewRef',);
+'binMatchAll','idxMatchAll','dirNameMerge','distCellAll',...
+'nameCellAll','boundCellAll','distCellAllNewRef','distCompiledAllCell');
+return
+% load(fullfile(outputDir,'nameCellsAndDistAndBoundAndDistRefAndCompiledRelStatsNoOrient.mat'),...
+% 'nameCellAll','distCompiledAllCell');
+% % 'binMatchAll','idxMatchAll','dirNameMerge','distCellAll',...
+% % 'boundCellAll','distCellAllNewRef',);
 
 compNo1=1;
 compNo2=8;

@@ -6,23 +6,28 @@ load(fullfile(outputDir,'nameCellsAndDistAndBoundAndDistRefNoOrient.mat'),...
 
 
 
-show=0;
+show=1;
 distCompiledAllCell=cell(size(distCellAllNewRef));
 
 % compNo1=1;
 % compNo2=8;
 
-for compNo1=1:16
-    for compNo2=1:16
+for compNo1=1
+%     :16
+    for compNo2=8
+%         1:16
         nameSpec1=nameCellAll{2,compNo1};
         nameSpec2=nameCellAll{2,compNo2};
+        distCellCurrCombo_unRef=distCellAll{compNo1,compNo2};
         distCellCurrCombo=distCellAllNewRef{compNo1,compNo2};
         distCompiledCellCurr=cell(7,0);
         for currCompNo1=1:numel(distCellCurrCombo)-1
             distCellCompNo1=distCellCurrCombo{currCompNo1};
-            
+            distCellCompNo1_unRef=distCellCurrCombo_unRef{currCompNo1};
             for currCompNo2=1:numel(distCellCompNo1)-1
                 distCell=distCellCompNo1{currCompNo2};
+                distCell_unRef=distCellCompNo1_unRef{currCompNo2};
+                
                 bPts1=boundCellAll{compNo1}{distCellCompNo1{end}}{1};
                 bLines1=boundCellAll{compNo1}{distCellCompNo1{end}}{2};
                 
@@ -53,8 +58,9 @@ for compNo1=1:16
                     caseNo
                     currCompNo1
                     currCompNo2
+                    pos'
                     visualizeBoxes(bPts1,bLines1,bPts2,bLines2);
-                    pause
+                   keyboard
                 end
                 
             end
@@ -65,6 +71,6 @@ for compNo1=1:16
 end
 
 
-save(fullfile(outputDir,'nameCellsAndDistAndBoundAndDistRefAndCompiledRelStatsNoOrient.mat'),...
-'binMatchAll','idxMatchAll','dirNameMerge','distCellAll',...
-'nameCellAll','boundCellAll','distCellAllNewRef','distCompiledAllCell');
+% save(fullfile(outputDir,'nameCellsAndDistAndBoundAndDistRefAndCompiledRelStatsNoOrient.mat'),...
+% 'binMatchAll','idxMatchAll','dirNameMerge','distCellAll',...
+% 'nameCellAll','boundCellAll','distCellAllNewRef','distCompiledAllCell');

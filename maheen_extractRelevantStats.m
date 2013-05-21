@@ -1,5 +1,9 @@
 function [ stats,caseNo ] = maheen_extractRelevantStats( distCell,hypos,pos )
-%UNTITLED11 Summary of this function goes here
+%returns the stats that are relevant per case. the ordering is hypos, and
+%then the length common to the calculation of each of the hypotenuse. For example the stats for case 2
+%are ordered as [hypos(min,min)  hypos(max,max) hypos(middle one)
+%commonLength]. For case 1 the ordering is [hypos(min,min)  hypos(max,max)
+%commonLength]
 %   Detailed explanation goes here
 
 if max(size(hypos))==3

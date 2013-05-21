@@ -1,5 +1,10 @@
 function [ distPerSide ] = maheen_getDistPerSide( distCell )
-%UNTITLED10 Summary of this function goes here
+%This function gets distCell, and based on the configuration returns the
+%relevant horizontal and vertical distances. The format for the distances
+%that are going to be more than one in number is [(min,min),
+% (min,max)or(max,min)depending on the case, (max,max)]. the format of the
+% returned cell is {relevant horizontal distance, relevant vertical
+% distances}
 %   Detailed explanation goes here
         intBin=zeros(1,2);
         distances=zeros(1,0);

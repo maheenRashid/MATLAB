@@ -1,5 +1,9 @@
 function [ distCell ] = maheen_getPairwiseDistAllTypes( comp1,comp2,show )
-%UNTITLED4 Summary of this function goes here
+%gets the signed horizontal and vertical distances between the components'
+%bounding box points and the unsigned distance between the corners of both
+%boxes. the ordering for distX and distY is [(min,min) (min,max);(max,min)
+%(max,max)]. the ordering for cornerPoints is similarly looped with both
+%sets of corners arranged in clockwise order starting from minx,miny.
 %   Detailed explanation goes here
 
 if nargin<3

@@ -1,5 +1,6 @@
 function  h=visualizeBoxes( bPts1,bLines1,bPts2,bLines2,h )
-%UNTITLED7 Summary of this function goes here
+%bPts1 is in red, and bPts2 is in black. magenta points are x,y projections
+%of the point. magenta for the red component, and blue for the black.
 %   Detailed explanation goes here
 if nargin<5
     h=figure;
